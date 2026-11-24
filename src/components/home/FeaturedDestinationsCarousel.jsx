@@ -136,7 +136,7 @@ export default function FeaturedDestinationsCarousel({ destinations = [] }) {
               return (
                 <CarouselItem
                   key={id}
-                  className="basis-[85%] pl-3 sm:basis-[48%] lg:basis-[382px]"
+                  className="basis-[85%] pl-3 sm:basis-[48%] lg:basis-95"
                 >
                   <article className="group h-full">
                     {/* Image */}
@@ -222,7 +222,7 @@ export default function FeaturedDestinationsCarousel({ destinations = [] }) {
               type="button"
               aria-label="Previous destinations"
               onClick={() => api?.scrollPrev()}
-              className="flex size-10 items-center justify-center rounded-full border border-border text-muted-foreground transition hover:border-sky-500 hover:bg-sky-500 hover:text-white"
+              className="flex size-10 items-center justify-center rounded-full border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
             >
               <ArrowLeft size={17} />
             </button>
@@ -231,7 +231,7 @@ export default function FeaturedDestinationsCarousel({ destinations = [] }) {
               type="button"
               aria-label="Next destinations"
               onClick={() => api?.scrollNext()}
-              className="flex size-10 items-center justify-center rounded-full border border-border text-muted-foreground transition hover:border-sky-500 hover:bg-sky-500 hover:text-white"
+              className="flex size-10 items-center justify-center rounded-full border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
             >
               <ArrowRight size={17} />
             </button>

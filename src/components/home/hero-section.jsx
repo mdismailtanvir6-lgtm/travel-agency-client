@@ -14,7 +14,7 @@ const searchFields = [
 
 export function HeroSection() {
   return (
-    <section className="relative isolate flex flex-1 flex-col overflow-hidden">
+    <section className="relative isolate flex min-h-svh flex-col overflow-hidden">
       <Image
         src="/images/Banner.png"
         alt="Turquoise cove surrounded by lush green coastal cliffs"

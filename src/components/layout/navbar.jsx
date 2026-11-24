@@ -32,7 +32,7 @@ function NavLink({ href, label, icon: Icon, isActive = false, className }) {
       className={cn(
         "inline-flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-brand",
         isActive ? "text-brand" : "text-foreground",
-        className
+        className,
       )}
     >
       {Icon ? <Icon className="size-4" /> : null}
@@ -41,9 +41,16 @@ function NavLink({ href, label, icon: Icon, isActive = false, className }) {
   );
 }
 
-export function Navbar() {
+export function Navbar({ variant = "default" }) {
+  const isOverlay = variant === "overlay";
+
   return (
-    <header className="relative z-40 w-full border-b border-border/60 bg-background">
+    <header
+      className={cn(
+        "z-40 w-full border-b border-border/60 bg-background",
+        isOverlay ? "absolute inset-x-0 top-0 bg-transparent" : "relative",
+      )}
+    >
       <nav
         aria-label="Main navigation"
         className="mx-auto flex h-14 w-full max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr]"

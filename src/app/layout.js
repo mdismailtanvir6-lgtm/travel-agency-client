@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { Navbar } from "@/components/layout/navbar";
+import { SiteNavbar } from "@/components/layout/site-navbar";
 import { Footer } from "@/components/layout/footer";
 
 const geistSans = Geist({
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <Navbar />
+            <SiteNavbar />
             <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
           </TooltipProvider>
