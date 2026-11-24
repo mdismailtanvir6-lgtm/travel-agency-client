@@ -40,11 +40,13 @@ Use `npx shadcn@latest add <component>` to add shadcn/ui components rather than 
 src/
   app/                 # App Router: layout.js, page.js, globals.css
   components/
+    home/              # home page sections (hero, search bar)
+    layout/            # site chrome such as the navbar
     theme/             # ThemeProvider and ModeToggle
     ui/                # generated shadcn/ui components (.jsx)
   hooks/               # shared React hooks (e.g. use-mobile)
   lib/utils.js         # re-exports `cn` from the `cn` package
-public/                # static assets
+public/images/         # local imagery (hero background)
 ```
 
 - `src/app/layout.js` owns fonts (Geist), metadata, `ThemeProvider`, and `TooltipProvider`.
@@ -55,6 +57,7 @@ public/                # static assets
 - Use the `@/` alias for cross-directory imports.
 - Use the exported `cn(...)` helper for conditional Tailwind classes. shadcn-generated components import it from `"cn"` directly; application code can import from `@/lib/utils`.
 - Style with Tailwind utilities and the shadcn CSS variables (`bg-background`, `text-foreground`, `border-border`, `bg-primary`, …) so light/dark mode keeps working; avoid hard-coded colors.
+- The cyan accent used by the navbar/hero is the `--brand` token; use `bg-brand` / `text-brand` rather than raw cyan values.
 - Follow the existing file style: function components, `export function Name`, named exports for components; default exports for pages/layouts.
 - Keep generated `src/components/ui/*` files close to upstream shadcn output; prefer extending through props/`className` over editing internals, so they stay updatable.
 - Check that changes render in both light and dark themes and on mobile widths.

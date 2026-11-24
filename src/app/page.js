@@ -1,11 +1,11 @@
-import { ModeToggle } from "@/components/theme/theme-toggle";
-import Image from "next/image";
+import { HeroSection } from "@/components/home/hero-section";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <ModeToggle />
-      hello world
+    <div className="flex min-h-svh flex-col bg-neutral-950 p-2 sm:p-3">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col overflow-hidden rounded-2xl bg-background">
+        <HeroSection />
+      </div>
     </div>
   );
 }
