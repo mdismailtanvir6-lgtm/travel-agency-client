@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, UserRound } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -24,6 +27,12 @@ const accountLinks = [
   { label: "Sign Up", href: "/signup" },
 ];
 
+// "/" only matches itself; every other link also matches its nested routes.
+function isLinkActive(pathname, href) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 function NavLink({ href, label, icon: Icon, isActive = false, className }) {
   return (
     <Link
@@ -43,6 +52,7 @@ function NavLink({ href, label, icon: Icon, isActive = false, className }) {
 
 export function Navbar({ variant = "default" }) {
   const isOverlay = variant === "overlay";
+  const pathname = usePathname();
 
   return (
     <header
@@ -61,7 +71,7 @@ export function Navbar({ variant = "default" }) {
               key={link.href}
               href={link.href}
               label={link.label}
-              isActive={link.href === "/"}
+              isActive={isLinkActive(pathname, link.href)}
             />
           ))}
         </div>
@@ -80,6 +90,7 @@ export function Navbar({ variant = "default" }) {
               href={link.href}
               label={link.label}
               icon={link.icon}
+              isActive={isLinkActive(pathname, link.href)}
             />
           ))}
         </div>
@@ -114,7 +125,7 @@ export function Navbar({ variant = "default" }) {
                     key={link.href}
                     href={link.href}
                     label={link.label}
-                    isActive={link.href === "/"}
+                    isActive={isLinkActive(pathname, link.href)}
                     className="rounded-md px-3 py-2.5 hover:bg-muted"
                   />
                 ))}
@@ -127,6 +138,7 @@ export function Navbar({ variant = "default" }) {
                     href={link.href}
                     label={link.label}
                     icon={link.icon}
+                    isActive={isLinkActive(pathname, link.href)}
                     className="rounded-md px-3 py-2.5 hover:bg-muted"
                   />
                 ))}
