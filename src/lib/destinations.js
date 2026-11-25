@@ -1,15 +1,10 @@
-import { cacheLife } from "next/cache";
-
 const API_URL = "https://travel-agency-server-iota.vercel.app/destinations";
 
+// Uncached on purpose: every render reads the freshest destination data.
 export async function getDestinations() {
-  "use cache";
-
-  cacheLife("max");
-
   try {
     const response = await fetch(API_URL, {
-      cache: "force-cache",
+      cache: "no-store",
       headers: {
         Accept: "application/json",
       },
@@ -32,20 +27,20 @@ export async function getDestinations() {
 
     return Array.isArray(destinations) ? destinations : [];
   } catch (error) {
+    // Prerendering aborts uncached fetches once the shell is complete —
+    // let React handle that instead of falling back to empty data.
+    if (error?.digest === "HANGING_PROMISE_REJECTION") throw error;
+
     console.error("Destination fetching error:", error);
     return [];
   }
 }
 
-// ==== get destination by slug =====
+// Uncached on purpose: every render reads the freshest destination data.
 export async function getDestinationBySlug(slug) {
-  "use cache";
-
-  cacheLife("max");
-
   try {
     const response = await fetch(`${API_URL}/${slug}`, {
-      cache: "force-cache",
+      cache: "no-store",
       headers: {
         Accept: "application/json",
       },
@@ -60,6 +55,10 @@ export async function getDestinationBySlug(slug) {
     // Supports either the destination object or a wrapped response.
     return result?.destination ?? result?.data ?? result;
   } catch (error) {
+    // Prerendering aborts uncached fetches once the shell is complete —
+    // let React handle that instead of falling back to a null destination.
+    if (error?.digest === "HANGING_PROMISE_REJECTION") throw error;
+
     console.error(`Destination "${slug}" fetching error:`, error);
     return null;
   }

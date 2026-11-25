@@ -1,15 +1,10 @@
-import { cacheLife } from "next/cache";
-
 const API_URL = "https://travel-agency-server-iota.vercel.app/reviews";
 
+// Uncached on purpose: every render reads the freshest reviews.
 export async function getReviews() {
-  "use cache";
-
-  cacheLife("max");
-
   try {
     const response = await fetch(API_URL, {
-      cache: "force-cache",
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -25,6 +20,10 @@ export async function getReviews() {
 
     return reviews;
   } catch (error) {
+    // Prerendering aborts uncached fetches once the shell is complete —
+    // let React handle that instead of falling back to no reviews.
+    if (error?.digest === "HANGING_PROMISE_REJECTION") throw error;
+
     console.error("Reviews fetching error:", error);
     return [];
   }

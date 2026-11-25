@@ -70,15 +70,31 @@ export default function FeaturedDestinationsCarousel({ destinations = [] }) {
       setSnapCount(api.scrollSnapList().length);
     };
 
-    updateCarousel();
-    updateSnaps();
+    const updateResponsiveOptions = () => {
+      const slidesToScroll = window.innerWidth >= 768 ? 3 : 1;
+
+      api.reInit({
+        align: "start",
+        loop: true,
+        slidesToScroll,
+      });
+
+      updateCarousel();
+      updateSnaps();
+    };
+
+    updateResponsiveOptions();
 
     api.on("select", updateCarousel);
     api.on("reInit", updateSnaps);
 
+    window.addEventListener("resize", updateResponsiveOptions);
+
     return () => {
       api.off("select", updateCarousel);
       api.off("reInit", updateSnaps);
+
+      window.removeEventListener("resize", updateResponsiveOptions);
     };
   }, [api]);
 
@@ -117,6 +133,7 @@ export default function FeaturedDestinationsCarousel({ destinations = [] }) {
             align: "start",
             loop: true,
             slidesToScroll: 1,
+            watchDrag: true,
           }}
           className="w-full"
         >
