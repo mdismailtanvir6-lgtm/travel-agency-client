@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -35,7 +36,11 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <SiteNavbar />
+            {/* SiteNavbar reads usePathname(), which can't be part of the
+                static shell for dynamic routes — it streams in instead. */}
+            <Suspense fallback={<div className="h-14" aria-hidden />}>
+              <SiteNavbar />
+            </Suspense>
             <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
           </TooltipProvider>

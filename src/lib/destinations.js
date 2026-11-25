@@ -36,3 +36,31 @@ export async function getDestinations() {
     return [];
   }
 }
+
+// ==== get destination by slug =====
+export async function getDestinationBySlug(slug) {
+  "use cache";
+
+  cacheLife("max");
+
+  try {
+    const response = await fetch(`${API_URL}/${slug}`, {
+      cache: "force-cache",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch destination: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    // Supports either the destination object or a wrapped response.
+    return result?.destination ?? result?.data ?? result;
+  } catch (error) {
+    console.error(`Destination "${slug}" fetching error:`, error);
+    return null;
+  }
+}
