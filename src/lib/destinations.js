@@ -63,3 +63,25 @@ export async function getDestinationBySlug(slug) {
     return null;
   }
 }
+
+// ======== create a destination package ======
+export async function createDestination(formData) {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  const result = await response.json().catch(() => null);
+
+  if (!response.ok || result?.success === false) {
+    throw new Error(
+      result?.message || `Failed to create destination: ${response.status}`,
+    );
+  }
+
+  return result;
+}
